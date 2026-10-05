@@ -53,7 +53,7 @@ mu <- 0 # mean of the distribution
 sd_norm <- 1 # sd of the distribution
 
 # rnorm is your simulation function here
-# take a look at how it's used by typing ``? rnorm``
+# take a look at how it's used by typing `?rnorm` in the Console
 ## note that this function is taking the inputs you specified above -- it doesn't matter what these are called
 norm_df <- tibble(sim_values = rnorm(n, mu, sd_norm))
 
@@ -113,7 +113,7 @@ Tasks:
 # Hint: Use tibble() and rbinom(n=200, size=1, prob=0.92)
 
 # TODO: summarise and count
-# Hint: Use summarise() to calculate proportion correct and n
+# Hint: Use summarise() to calculate proportion correct and n, then count(acc) for the count table
 ```
 
 ```{r}
@@ -171,7 +171,7 @@ Tasks:
 - Plot a histogram and compute **mean**, **median**, **max**.
 - Create `log_rt = log(rt)` and compare distributions
 
-Here's a helper function to create lognormal RTs with a baseline shift. Note on these parameters: In a lognormal distribution, the parameters `meanlog` and `sdlog` describe the underlying normal distribution on the log scale, NOT the mean and standard deviation of the observed reaction times. If we want RTs centered around 250 ms, we set `meanlog` = log(250) because the median of a lognormal is `exp(meanlog)`---so this choice makes the median RT about 250 ms. The `sdlog` parameter controls the amount of skew on the log scale: typical behavioral data are well-modeled by `sdlog` values between about 0.3 and 0.5. Using `sdlog` = log(20) would be incorrect, because `sdlog` already represents variability on the log scale; taking the log of a raw-scale SD would produce unrealistically long-tailed RTs spanning thousands of milliseconds. You don't need to understand all of these details, but I realize it could be confusing and so wanted to include this explanation.
+Here's a helper function to create lognormal RTs with a baseline shift. Note on these parameters: In a lognormal distribution, the parameters `meanlog` and `sdlog` describe the underlying normal distribution on the log scale, NOT the mean and standard deviation of the observed reaction times. The median of a lognormal is `exp(meanlog)`, so `meanlog` = log(250) makes the median of the lognormal part 250 ms. The helper adds `t0` on top, so with `t0 = 300` the median simulated RT is about 300 + 250 = 550 ms. The `sdlog` parameter controls the amount of skew on the log scale: typical behavioral data are well-modeled by `sdlog` values between about 0.3 and 0.5. Using `sdlog` = log(20) would be incorrect, because `sdlog` already represents variability on the log scale; taking the log of a raw-scale SD would produce unrealistically long-tailed RTs spanning thousands of milliseconds. You don't need to understand all of these details, but I realize it could be confusing and so wanted to include this explanation.
 
 ```{r}
 # Helper: shifted lognormal RTs (t0 + LogNormal(meanlog, sdlog))
@@ -192,6 +192,13 @@ Now look at their relationship -- use `ggplot()` with `geom_point()`, putting `r
 ```{r}
 # TODO: Plot rt vs log_rt
 # Hint: ggplot() with geom_point()
+```
+
+Now plot a histogram of `rt`, and another of `log_rt`. Which one looks more like a normal distribution?
+
+```{r}
+# TODO: histograms of rt and log_rt
+# Hint: ggplot() with geom_histogram(), as in section A
 ```
 
 OK, now let's make some summaries. Use the summarize function to calculate the mean, median, max, and sd of the rt distribution. Note that you don't have to make a new dataframe for this.
