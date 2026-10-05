@@ -1,143 +1,122 @@
-# Data Simulation Lab 1
+# Data Simulation Lab 1: distributions
 
-Welcome to the first data simulation lab for Psych 201a! This lab introduces you to statistical distributions and data simulation techniques commonly used in psychological research.
+First data simulation lab for **PSYC 201A** (UC San Diego). You will simulate
+the kinds of data psychology experiments produce, and summarize and plot it with
+the tidyverse. When you are done you will have:
 
-## Lab Goals
+- Simulated data from normal, binomial, and lognormal distributions
+- Built a small simulated experiment with conditions, blocks, and participants
+- Summarized and reshaped it with `group_by()`, `summarise()`, and `pivot_longer()` / `pivot_wider()`
+- Plotted it with ggplot
+- Written sentences whose numbers come from your code (inline R), not by hand
 
-- **Understand distributions**: Learn how normal, binomial, and lognormal distributions describe behavioral data (accuracy, RTs, individual variability)
-- **Practice simulation**: Generate and visualize synthetic datasets using tidyverse functions  
-- **Reproducible reports**: Learn how to write reproducible lab reports with inline statistics in Quarto
-
-## Prerequisites
-
-Make sure you have the following installed:
-- [Homebrew](https://brew.sh) (macOS package manager)
-- [Git](https://git-scm.com/) and [GitHub CLI](https://cli.github.com/)
-- [Pixi](https://pixi.sh/) (package manager for R and Python)
-
-## Getting Started
-
-### 1. Fork this Repository
-
-1. Go to [https://github.com/psyc-201/data_simulation_lab_1](https://github.com/psyc-201/data_simulation_lab_1)
-2. Click the "Fork" button in the top-right corner
-3. This creates a copy of the repository under your own GitHub account
-
-### 2. Clone Your Fork
-
-```bash
-git clone https://github.com/YOUR_USERNAME/data_simulation_lab_1.git
-cd data_simulation_lab_1
-```
-
-Replace `YOUR_USERNAME` with your actual GitHub username.
-
-### 3. Install Dependencies
-
-```bash
-pixi install
-```
-
-### 4. Setup R & Python Kernels
-
-```bash
-pixi run setup
-```
-
-### 5. Open in VS Code
-
-1. Open VS Code and use the account icon to login to your GitHub account
-2. Open the folder you cloned: File > Open
-3. Accept any pop-ups to configure VS Code with necessary extensions
-
-### 6. Start Working
-
-- **R Console**: `pixi run r`
-- **Live Preview**: `pixi run render`
-- **Preview specific file**: `pixi run preview filename.qmd`
-
-## Lab Structure
-
-This lab includes multiple versions to support different learning styles:
-
-| File                                       | Description                                       |
-| ------------------------------------------ | ------------------------------------------------- |
-| `code/index.qmd`                           | Introduction and overview                         |
-| `code/distributions-lab.qmd`               | Complete lab with full instructions               |
-| `code/distributions-lab-intermediate.qmd`  | Scaffolded version with placeholders to fill in   |
-| `code/distributions-lab-withsolutions.qmd` | Complete solutions for reference                  |
-| `code/distributions_lab.py`                | Python implementation using pandas and matplotlib |
-| `code/distributions_lab_withsolutions.py`  | Python solutions                                  |
-
-## Working with the Lab
-
-### R/Quarto Workflow
-
-1. Open `code/distributions-lab-intermediate.qmd` in VS Code
-2. Use the command palette (`cmd+shift+p`) to search: "Terminal: Create New Terminal"
-3. Start the R console: `pixi run r`
-4. Fill in the `___` placeholders in the intermediate version
-5. Use "Run cell" buttons to execute code chunks
-
-### Python Workflow
-
-1. Open `code/distributions_lab.py` in VS Code
-2. Use the command palette to search: "Jupyter: Create Interactive Window"
-3. Use "Run cell" buttons to execute code
-
-### Converting Between Formats
-
-- Convert `.qmd` to `.ipynb`: `pixi run convert filename.qmd`
-- Convert `.ipynb` to `.qmd`: `pixi run convert filename.ipynb`
-
-## Adding/Removing Libraries
-
-Use these commands to manage packages (they auto-update `pixi.toml`):
-
-- **Python**: `pixi add package` or `pixi add --pypi package`
-- **R**: `pixi add r-package`
-- **Remove**: `pixi remove package` or `pixi remove r-package`
-
-## Key Topics Covered
-
-- **Normal distributions**: Simulating continuous data
-- **Binomial distributions**: Modeling accuracy and binary outcomes  
-- **Lognormal distributions**: Simulating reaction times
-- **Multi-participant experiments**: Individual differences and group-level analysis
-- **Data visualization**: Creating publication-ready plots
-
-## Troubleshooting
-
-### Common Issues
-
-1. **R not found**: Make sure you're using `pixi run r` not just `r`
-2. **Package not found**: Use `pixi add` instead of `install.packages()` or `pip install`
-3. **Render errors**: The intermediate version cannot be rendered due to placeholder syntax - fill in the `___` placeholders first
-
-### Reset Environment
-
-If anything goes wrong, you can safely reset:
-
-```bash
-rm -rf .pixi/ pixi.lock
-pixi install
-pixi run setup
-```
-
-## Resources
-
-- [Quarto Documentation](https://quarto.org/docs/)
-- [Tidyverse Documentation](https://www.tidyverse.org/)
-- [Pandas Documentation](https://pandas.pydata.org/)
-- [Matplotlib Documentation](https://matplotlib.org/)
-- [Pixi Documentation](https://pixi.sh/latest/)
-
-## Important Notes
-
-**Always prefer using `pixi add` and `pixi remove` instead of `install.packages()` in R or `pip install` / `conda install` in Python**
-
-This will save you from many unexpected headaches and ensure reproducible environments!
+> **Before you start:** finish
+> [getting-started-with-r](https://github.com/psyc-201/getting-started-with-r).
+> This lab assumes R, RStudio, GitHub Desktop, and the tidyverse are installed,
+> and that you have done one edit → commit → push. It needs nothing else: no
+> terminal, no extra packages.
 
 ---
 
-*Happy coding! 🎉*
+## Part 1. Make your own copy
+
+Same steps as in getting-started-with-r:
+
+1. At the top of [this repository's GitHub page](https://github.com/psyc-201/data_simulation_lab_1),
+   click the green **Use this template** button, then **Create a new repository**.
+2. Owner: **your own account**. Name it `data_simulation_lab_1`, leave it
+   **Public**, and click **Create repository**.
+3. On *your* copy (the header reads `yourname/data_simulation_lab_1`), click
+   **Code** → **Open with GitHub Desktop** → **Clone**.
+
+Step-by-step version:
+[github-desktop.md](https://github.com/psyc-201/getting-started-with-r/blob/main/docs/github-desktop.md).
+
+## Part 2. Open the project and pick a version
+
+**Double-click `data_simulation_lab_1.Rproj`** to open RStudio inside the
+project.
+
+There are two versions of the lab. They cover the same material. Pick **one**:
+
+| File | Pick it if… |
+|---|---|
+| `distributions-lab-intermediate.qmd` | You are newer to R. Most code is written; you fill in each `___`. |
+| `distributions-lab.qmd` | You have used the tidyverse before. You get worked examples and hints, and you write the code. |
+
+`distributions-lab-solutions.qmd` has a complete answer key. Use it to check
+your work *after* you have tried a section, not instead of trying.
+
+## Part 3. Work through the lab
+
+Put your name in the `author:` line, then go section by section. Run one chunk
+at a time with the green arrow at its top right, and click **Render** to see the
+whole document.
+
+| Section | Distribution | Simulates |
+|---|---|---|
+| A | Normal (`rnorm`) | a continuous measure; worked example |
+| B | Binomial (`rbinom`) | trial accuracy (correct/incorrect), then two conditions × four blocks |
+| C | Shifted lognormal (`rlnorm`) | reaction times, which are right-skewed |
+| D | Shifted lognormal, two conditions | a Posner cueing task: valid vs. invalid cues; bonus: 20 simulated participants |
+
+Two things that make the document behave:
+
+- **`set.seed(2025)`** at the top means the "random" numbers are the same on
+  every render, so the numbers in your sentences stay put. Change the seed and
+  everything changes.
+- **Inline R.** Write `` `r round(mean(norm_df$sim_values), 2)` `` in your text
+  and Render replaces it with the number. Sections A and B each ask you to
+  write a sentence this way.
+
+In the intermediate version, `error: true` is set at the top, so the document
+**renders even while it still has `___` blanks**. The unfinished chunks show an
+error in red. When nothing is red, you are done.
+
+## Part 4. Commit, push, and submit
+
+Commit as you go. After each section is a good rhythm. When you are finished:
+
+1. Render one last time and check the HTML looks right.
+2. In GitHub Desktop, commit with a message like `Finish simulation lab`, then
+   **Push origin**.
+3. Submit the link to your repository however your instructor asks.
+
+The rendered `.html` files are ignored by git (see `.gitignore`), so only your
+`.qmd` is pushed. If your instructor wants the HTML committed too, delete the
+matching lines from `.gitignore`.
+
+## What is in this repository
+
+```
+data_simulation_lab_1/
+├── data_simulation_lab_1.Rproj          open this to start work
+├── distributions-lab-intermediate.qmd   scaffolded version: fill in the ___
+├── distributions-lab.qmd                hints-only version
+└── distributions-lab-solutions.qmd      answer key
+```
+
+There is no `data/` folder: you make all the data yourself.
+
+## Stuck?
+
+1. **Setup errors** (package not found, RStudio not in the project): see
+   [troubleshooting.md](https://github.com/psyc-201/getting-started-with-r/blob/main/docs/troubleshooting.md)
+   in the getting-started repository.
+2. **`could not find function "..."`:** you have not run the `setup` chunk
+   (the one with `library(tidyverse)`) since you opened RStudio. Run it, then
+   try again.
+3. **`object '...' not found`:** a chunk further up has not been run, or
+   failed. Run the chunks in order from the top. **Run All Chunks Above**
+   (the grey down-arrow next to the green one) does this for you.
+4. **Your numbers do not match the solutions exactly:** that is fine as long as
+   the parameters match. The solutions file sets the same seed, but if you run
+   chunks in a different order or more than once, you draw different random
+   numbers. Render from scratch to get the seeded values.
+5. Still stuck? Post the **exact** error message in the course forum.
+
+## Resources
+
+- [R for Data Science (2e)](https://r4ds.hadley.nz/): the tidyverse, chapter by chapter
+- [Experimentology](https://experimentology.io/): the course textbook
+- [Quarto: using R](https://quarto.org/docs/computations/r.html)
